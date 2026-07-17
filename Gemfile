@@ -32,6 +32,10 @@ gem "sidekiq"
 gem 'pg', '>= 1.5.6'
 gem 'redis'
 
+
+gem 'psd', '>= 1.4.1'
+gem 'psd_native', '>= 1.1.3'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
