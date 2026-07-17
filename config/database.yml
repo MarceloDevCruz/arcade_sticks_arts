@@ -1,0 +1,22 @@
+# Configurações padrão
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  timeout: 5000
+
+# Ambiente de Desenvolvimento (Conecta direto nos containers do Docker)
+development:
+  <<: *default
+  host: db
+  username: postgres
+  password: password
+  database: arcade_stick_arts_development
+
+# Ambiente de Teste
+test:
+  <<: *default
+  host: db
+  username: postgres
+  password: password
+  database: arcade_stick_arts_test
