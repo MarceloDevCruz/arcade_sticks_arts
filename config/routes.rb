@@ -15,5 +15,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  root "welcome#index"
+  namespace :psd do
+    resources :files, only: [:new, :create, :index]
+  end
+
+  root "psd/files#new"
 end

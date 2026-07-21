@@ -1,0 +1,22 @@
+<h1>Upload de Arquivo PSD</h1>
+
+<%= form_with model: @psd_file, multipart: true do |form| %>
+  
+  <div>
+    <%= form.label :title %>
+    <%= form.text_field :title, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :psd, "Arquivo .psd" %>
+    <%= form.file_field :psd, accept: ".psd", required: true %>
+  </div>
+
+  <br>
+  <%= form.submit "Enviar PSD" %>
+<% end %>

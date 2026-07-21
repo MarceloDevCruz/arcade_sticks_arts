@@ -32,7 +32,7 @@ gem "sidekiq"
 gem 'pg', '>= 1.5.6'
 gem 'redis'
 
-
+gem 'active_storage_validations'
 gem 'psd', '>= 1.4.1'
 gem 'psd_native', '>= 1.1.3'
 
