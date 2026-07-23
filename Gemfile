@@ -69,3 +69,6 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "wisper", "~> 3.0"
+gem "wisper-sidekiq", "~> 1.3"

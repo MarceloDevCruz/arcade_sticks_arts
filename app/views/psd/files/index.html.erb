@@ -1,0 +1,21 @@
+<h1>Arquivos PSD</h1>
+
+<p><%= link_to "Enviar novo PSD", new_psd_file_path %></p>
+
+<% if @psd_files.any? %>
+  <ul>
+    <% @psd_files.each do |psd_file| %>
+      <li>
+        <strong><%= psd_file.title %></strong>
+        <% if psd_file.metadata.present? %>
+          — <%= psd_file.metadata["width"] %>x<%= psd_file.metadata["height"] %>
+          (<%= psd_file.metadata["layer_count"] %> camadas)
+        <% else %>
+          — processando...
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Nenhum PSD enviado ainda.</p>
+<% end %>

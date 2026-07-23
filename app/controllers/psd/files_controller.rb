@@ -12,9 +12,10 @@ class Psd::FilesController < ApplicationController
     service = Psd::FilesServices::Create.new(psd_file_params)
 
     if service.call
-      redirect_to root_path, notice: "PSD enviado com sucesso!"
+      redirect_to psd_files_path, notice: "PSD adicionado com sucesso!"
     else
       @psd_file = service.psd_file
+      flash.now[:alert] = service.error
       render :new, status: :unprocessable_entity
     end
   end

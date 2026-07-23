@@ -1,5 +1,13 @@
 <h1>Upload de Arquivo PSD</h1>
 
+<% if @psd_file.errors.any? %>
+  <ul>
+    <% @psd_file.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= form_with model: @psd_file, multipart: true do |form| %>
   
   <div>
