@@ -37,7 +37,19 @@ services:
       - db
       - redis
 
-  # Worker do Sidekiq (roda na mesma imagem do Rails, mas com comando diferente)
+  # Compilador Automático do Tailwind (Assiste alterações nas views e recompila o CSS)
+  css:
+    build: .
+    platform: linux/amd64
+    command: bundle exec rails tailwindcss:watch
+    volumes:
+      - .:/app
+    environment:
+      - RAILS_ENV=development
+    depends_on:
+      - web
+
+  # Worker do Sidekiq
   sidekiq:
     build: .
     command: bundle exec sidekiq

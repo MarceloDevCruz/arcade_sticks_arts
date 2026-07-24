@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -22,7 +23,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body style="background-color: #0E0E0E;">
     <% if notice.present? %>
       <p><%= notice %></p>
     <% end %>

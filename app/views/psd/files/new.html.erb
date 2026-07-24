@@ -1,30 +1,93 @@
-<h1>Upload de Arquivo PSD</h1>
+<div class="max-w-3xl mx-auto px-4 py-8">
+  <!-- Top Bar / Header -->
+  <header class="mb-8 flex items-center justify-between border-b border-slate-800 pb-5">
+    <div>
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-2">
+        ✨ Studio Upload
+      </span>
+      <h1 class="text-3xl font-extrabold tracking-tight text-white">Upload de Arquivo PSD</h1>
+      <p class="text-sm text-slate-400 mt-1">Envie seus projetos do Photoshop para extração automática de metadados e preview.</p>
+    </div>
 
-<% if @psd_file.errors.any? %>
-  <ul>
-    <% @psd_file.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
+    <%= link_to psd_files_path, 
+          class: "inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500", 
+          aria_label: "Voltar para a biblioteca de PSDs" do %>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+      </svg>
+      Voltar
     <% end %>
-  </ul>
-<% end %>
+  </header>
 
-<%= form_with model: @psd_file, multipart: true do |form| %>
-  
-  <div>
-    <%= form.label :title %>
-    <%= form.text_field :title, required: true %>
-  </div>
+  <!-- Error Alerts -->
+  <% if @psd_file.errors.any? %>
+    <div role="alert" aria-live="assertive" class="mb-6 p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-300">
+      <div class="flex items-center gap-2.5 font-semibold mb-2 text-rose-200">
+        <svg class="w-5 h-5 flex-shrink-0 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span>Atenção: <%= pluralize(@psd_file.errors.count, "erro impediu", "erros impediram") %> a gravação</span>
+      </div>
+      <ul class="list-disc list-inside text-sm space-y-1 text-rose-300/90 pl-1">
+        <% @psd_file.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-  <div>
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
+  <!-- Main Upload Form -->
+  <%= form_with model: @psd_file, multipart: true, class: "space-y-6" do |form| %>
+    <!-- Title Input -->
+    <div>
+      <%= form.label :title, "Título do arquivo", class: "block text-sm font-medium text-slate-200 mb-2" %>
+      <%= form.text_field :title, 
+            required: true, 
+            placeholder: "Ex: Dashboard Redesign 2026 - Final", 
+            class: "w-full px-4 py-3 bg-slate-900 border border-slate-700/80 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm" %>
+    </div>
 
-  <div>
-    <%= form.label :psd, "Arquivo .psd" %>
-    <%= form.file_field :psd, accept: ".psd", required: true %>
-  </div>
+    <!-- Description Input -->
+    <div>
+      <%= form.label :description, "Descrição (opcional)", class: "block text-sm font-medium text-slate-200 mb-2" %>
+      <%= form.text_area :description, 
+            rows: 3, 
+            placeholder: "Instruções das camadas, paleta de cores ou observações adicionais...", 
+            class: "w-full px-4 py-3 bg-slate-900 border border-slate-700/80 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm resize-none" %>
+    </div>
 
-  <br>
-  <%= form.submit "Enviar PSD" %>
-<% end %>
+    <!-- Dropzone File Upload -->
+    <div>
+      <%= form.label :psd, "Arquivo Photoshop (.psd)", class: "block text-sm font-medium text-slate-200 mb-2" %>
+      
+      <div class="relative group border-2 border-dashed border-slate-700 hover:border-indigo-500/80 bg-slate-900/50 hover:bg-slate-900/80 rounded-2xl p-8 text-center transition-all duration-200 flex flex-col items-center justify-center cursor-pointer">
+        <%= form.file_field :psd, 
+              accept: ".psd", 
+              required: true, 
+              aria_describedby: "psd_file_help", 
+              class: "absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" %>
+        
+        <div class="p-4 rounded-full bg-slate-800 text-indigo-400 group-hover:scale-110 group-hover:bg-indigo-500/20 group-hover:text-indigo-300 transition-all duration-200 mb-4">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+          </svg>
+        </div>
+
+        <p class="text-sm font-semibold text-slate-200 group-hover:text-white mb-1">
+          Arraste e solte o arquivo aqui, ou <span class="text-indigo-400 underline underline-offset-2">clique para buscar</span>
+        </p>
+        <p id="psd_file_help" class="text-xs text-slate-400">
+          Apenas extensões <strong>.psd</strong> são aceitas. O processamento de metadados iniciará em segundo plano.
+        </p>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+      <%= link_to "Cancelar", psd_files_path, class: "px-5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-200 transition-colors" %>
+      
+      <%= form.submit "Enviar e Processar PSD", 
+            class: "inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 shadow-lg shadow-indigo-600/25 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-950" %>
+    </div>
+  <% end %>
+</div>
