@@ -3,7 +3,4 @@ class Psd::File < ApplicationRecord
 
   has_one_attached :psd
   has_one_attached :preview
-
-  validates :title, presence: true
-  validates :psd, presence: true
 end

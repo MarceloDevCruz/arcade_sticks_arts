@@ -16,5 +16,5 @@ end
 Rails.application.reloader.to_prepare do
   Wisper.clear if Rails.env.development?
 
-  Wisper.subscribe(Psd::FilesListeners::ParsePsd, async: true)
+  Wisper.subscribe(Psd::FilesWorkers::ParsePsd, async: true)
 end

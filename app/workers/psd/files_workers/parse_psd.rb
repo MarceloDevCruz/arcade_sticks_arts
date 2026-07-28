@@ -1,6 +1,6 @@
-class Psd::FilesListeners::ParsePsd
+class Psd::FilesWorkers::ParsePsd
   def self.psd_file_created(psd_file_id)
-    psd_file = Psd::File.find_by(id: psd_file_id)
+    psd_file = ::Psd::File.find_by(id: psd_file_id)
     return unless psd_file&.psd&.attached?
 
     process_psd(psd_file)
