@@ -9,7 +9,7 @@ class Psd::FilesController < ApplicationController
   end
 
   def create
-    service = Psd::FilesServices::Create.new(psd_file_params)
+    service = Psd::Files::CreateService.new(psd_file_params)
 
     if service.call
       redirect_to psd_files_path, notice: "PSD adicionado com sucesso!"
